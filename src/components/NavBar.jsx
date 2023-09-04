@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useContext, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,19 +11,24 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import FeedIcon from '@mui/icons-material/Feed';
+import FeedIcon from "@mui/icons-material/Feed";
+import Switch from "@mui/material/Switch";
 import { Link } from "react-router-dom";
+import { UserContext } from "../contexts/User";
+import { ModeContext } from "../contexts/Mode";
+import { darkTheme, lightTheme } from "../themes/theme";
 
 const pages = [
   { title: "Home", link: "/" },
   { title: "Topics", link: "/topics" },
   { title: "Create Article", link: "/create-article" },
 ];
-const settings = ["View your Articles", "Logout"];
 
 function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { user, setUser } = useContext(UserContext);
+  const { mode, setMode } = useContext(ModeContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -33,12 +38,29 @@ function NavBar() {
   };
 
   const handleCloseNavMenu = () => {
-    console.log("i have been clicked");
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    setAnchorElUser(null);
+    setUser("");
+  };
+
+  const handleViewMyArticles = () => {
+    setAnchorElUser(null);
+    console.log("redirect me to my articles");
+  };
+
+  const handleModeChange = () => {
+    if (mode === lightTheme) {
+      setMode(darkTheme);
+    } else {
+      setMode(lightTheme);
+    }
   };
 
   return (
@@ -99,11 +121,7 @@ function NavBar() {
                   key={page.link}
                   style={{ textDecoration: "none" }}
                 >
-                  <MenuItem
-                    key={page.title}
-                    value={"bob"}
-                    onClick={handleCloseNavMenu}
-                  >
+                  <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page.title}</Typography>
                   </MenuItem>
                 </Link>
@@ -148,9 +166,11 @@ function NavBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Switch defaultChecked color="warning" onClick={handleModeChange} />
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user.username} src={user.avatar_url} />
+                {user.username && <Typography>Hi, {user.username}</Typography>}
               </IconButton>
             </Tooltip>
             <Menu
@@ -169,12 +189,23 @@ function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                // add link for login/logout on click 
-                <MenuItem key={setting} onClick={handleCloseUserMenu}> 
-                  <Typography textAlign="center">{setting}</Typography>
+              <MenuItem key="View your Articles" onClick={handleViewMyArticles}>
+                <Typography textAlign="center">View your Articles</Typography>
+              </MenuItem>
+              {user.username ? (
+                <MenuItem key="Logout" onClick={handleLogout}>
+                  <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                <Link
+                  to={"/login"}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <MenuItem key="Login">
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                </Link>
+              )}
             </Menu>
           </Box>
         </Toolbar>
