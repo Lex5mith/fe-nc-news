@@ -7,16 +7,10 @@ export const DefaultLayout = ({ children }) => {
       <NavBar />
       <Box
         sx={{
-          paddingLeft: "4em",
-          paddingRight: "4em",
-
-          // width: 300,
-          // height: 300,
-          // backgroundColor: "primary.dark",
-          // "&:hover": {
-          //   backgroundColor: "primary.main",
-          //   opacity: [0.9, 0.8, 0.7],
-          // },
+          padding: "4em",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         {children}
