@@ -16,7 +16,7 @@ export const DefaultLayout = ({ children }) => {
           flexGrow: 1,
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: mode.palette.backgroundColor,
+          backgroundColor: mode.palette.background,
         }}
       >
         {children}
