@@ -17,7 +17,8 @@ import { Link } from "react-router-dom";
 const pages = [
   { title: "Home", link: "/" },
   { title: "Topics", link: "/topics" },
-  { title: "Create Article", link: "/create-article" },
+  { title: "Create Article", link: "/create-article" }
+  { title: "Login", link: "/login" },
 ];
 const settings = ["View your Articles", "Logout"];
 

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Topics } from "./pages/Topics";
+import { LogInPage } from "./pages/Login"
 import { CreateArticle } from "./pages/CreateArticle";
 import "./App.css";
 import { DefaultLayout } from "./layouts/DefaultLayout";
+
 
 function App() {
   return (
@@ -30,6 +32,14 @@ function App() {
         element={
           <DefaultLayout>
             <CreateArticle />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <DefaultLayout>
+            <LogInPage />
           </DefaultLayout>
         }
       />
