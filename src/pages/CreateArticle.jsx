@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
+import { CreateArticleForm } from "../components/CreateArticleForm";
 
 export const CreateArticle = () => {
-    return <p>Hi this is my create article page</p>
-}
+  return <CreateArticleForm />;
+};
