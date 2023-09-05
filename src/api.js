@@ -4,9 +4,9 @@ export const getArticles = () => {
   return axios.get("https://lexs-nc-news.onrender.com/api/articles");
 };
 
-export const getSingleArticle = (item_id) => {
+export const getSingleArticle = (article_id) => {
   return axios.get(
-    `https://lexs-nc-news.onrender.com/api/articles${article_id}`
+    `https://lexs-nc-news.onrender.com/api/articles/${article_id}`
   );
 };
 
@@ -17,3 +17,7 @@ export const getUsers = () => {
 export const postItem = (req) => {
   return axios.post("https://lexs-nc-news.onrender.com/api/articles", req);
 };
+
+export const getComments = (article_id) => {
+    return axios.get(`https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`)
+}

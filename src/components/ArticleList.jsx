@@ -24,6 +24,7 @@ export const ArticleList = () => {
   }, []);
 
   if (articles) {
+    console.log(articles)
     return (
       <Grid
         container
