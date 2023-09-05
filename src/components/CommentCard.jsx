@@ -1,15 +1,12 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
-import ShareIcon from "@mui/icons-material/Share";
 import CommentIcon from "@mui/icons-material/Comment";
 import moment from "moment";
-import { minHeight } from "@mui/system";
 
 export const CommentCard = ({ comment }) => {
   return (

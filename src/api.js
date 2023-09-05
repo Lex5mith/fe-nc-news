@@ -14,10 +14,18 @@ export const getUsers = () => {
   return axios.get(`https://lexs-nc-news.onrender.com/api/users`);
 };
 
-export const postItem = (req) => {
-  return axios.post("https://lexs-nc-news.onrender.com/api/articles", req);
+export const postComment = (article_id, username, articleText) => {
+  return axios.post(
+    `https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`,
+    {
+      username: username,
+      body: articleText,
+    }
+  );
 };
 
 export const getComments = (article_id) => {
-    return axios.get(`https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`)
-}
+  return axios.get(
+    `https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`
+  );
+};

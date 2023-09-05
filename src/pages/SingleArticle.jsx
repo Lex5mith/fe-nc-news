@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { getArticles, getSingleArticle, getComments } from "../api";
@@ -14,6 +15,9 @@ import Avatar from "@mui/material/Avatar";
 import { getUsers } from "../api";
 import { CommentCard } from "../components/CommentCard";
 import CommentIcon from "@mui/icons-material/Comment";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import { CreateComment } from "../components/CreateComment";
 
 export const SingleArticle = () => {
   const [singleArticle, setSingleArticle] = useState({});
@@ -53,7 +57,7 @@ export const SingleArticle = () => {
   }, [singleArticle]);
 
   useEffect(() => {
-    if (singleArticle) {
+    if (singleArticle.article_id) {
       setIsLoading(true);
       getComments(singleArticle.article_id).then(({ data }) => {
         const { comments } = data;
@@ -191,6 +195,12 @@ export const SingleArticle = () => {
           >
             {body}
           </Typography>
+
+          <CreateComment
+            articleComments={articleComments}
+            setArticleComments={setArticleComments}
+          />
+
           <Divider
             sx={{
               bgcolor: "secondary.dark",
@@ -201,18 +211,33 @@ export const SingleArticle = () => {
             }}
             variant="middle"
           />
-
-          <CommentIcon
+          <Box
             sx={{
-              fontSize: "3rem",
+              display: "flex",
+              flexDirection: "row",
+              textAlign: "center",
+              justifyContent: "center",
+              fontSize: "4rem",
               lineHeight: 3,
-              //   alignItems: "center",
-              //   verticalAlign: "middle",
+              paddingTop: "1em",
+              paddingBottom: "0.5em",
             }}
-          />
+          >
+            <CommentIcon
+              sx={{
+                fontSize: "4rem",
+                lineHeight: 3,
+              }}
+            />
+            <Typography variant="h6" color="text.secondary">
+              {articleComments.length} Comments
+            </Typography>
+          </Box>
           {/* //map over and for each comment on article, assign comment card.// */}
           {articleComments &&
-            articleComments.map((comment) => <CommentCard comment={comment} />)}
+            articleComments.map((comment) => (
+              <CommentCard key={comment.comment_id} comment={comment} />
+            ))}
         </Paper>
       </div>
     </Box>
