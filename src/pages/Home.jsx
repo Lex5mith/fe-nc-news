@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { ArticleList } from "../components/ArticleList";
 export const Home = () => {
-    return <p>Hi this is my home page</p>
-}
+  return <ArticleList />;
+};
