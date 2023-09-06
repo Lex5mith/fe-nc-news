@@ -5,7 +5,6 @@ import { ModeContext } from "../contexts/Mode.jsx";
 
 export const DefaultLayout = ({ children }) => {
   const { mode } = useContext(ModeContext);
-  console.log(mode.palette);
   return (
     <>
       <NavBar />

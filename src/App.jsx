@@ -8,6 +8,7 @@ import { CreateArticle } from "./pages/CreateArticle";
 import "./App.css";
 import { DefaultLayout } from "./layouts/DefaultLayout";
 import { ModeContext } from "./contexts/Mode.jsx";
+import { SingleArticle } from "./pages/SingleArticle";
 
 function App() {
   const { mode } = useContext(ModeContext);
@@ -46,7 +47,18 @@ function App() {
             </DefaultLayout>
           }
         />
+          <Route
+          path="/articles/:article_id"
+          element={
+            <DefaultLayout>
+              <SingleArticle 
+             
+              />
+            </DefaultLayout>
+          }
+        />
       </Routes>
+
     </ThemeProvider>
   );
 }

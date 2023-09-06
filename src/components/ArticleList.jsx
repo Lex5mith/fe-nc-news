@@ -9,11 +9,9 @@ export const ArticleList = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("use effect running");
     setIsLoading(true);
     getArticles()
       .then(({ data }) => {
-        console.log(data, "<<<<data in list");
         setArticles(data.articles);
         setIsLoading(false);
         setError(false);
@@ -23,7 +21,11 @@ export const ArticleList = () => {
       });
   }, []);
 
+  if (isLoading) return <p>...is Loading</p>;
+  if (error) return <p>{error}</p>;
+
   if (articles) {
+    console.log(articles);
     return (
       <Grid
         container
