@@ -52,7 +52,6 @@ function NavBar() {
 
   const handleViewMyArticles = () => {
     setAnchorElUser(null);
-    console.log("redirect me to my articles");
   };
 
   const handleModeChange = () => {

@@ -47,7 +47,6 @@ export const CreateComment = ({ setArticleComments }) => {
           setShowCommentInput(!showCommentInput);
           setIsLoading(false);
           setCommentText("");
-          console.log(data);
         })
         .catch((error) => {
           setIsLoading(false);

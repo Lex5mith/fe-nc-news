@@ -1,24 +1,22 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getArticles } from "../api";
 import { ArticleCard } from "./ArticleCard";
 import Grid from "@mui/material/Grid";
 
-export const ArticleList = ({
-  topicFilter,
-  dateSortDirection,
-  commentCountSortDirection,
-  votesSortDirection,
-}) => {
+export const ArticleList = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const topicQuery = searchParams.get("topic");
+  const sortByQuery = searchParams.get("sort_by");
+  const orderQuery = searchParams.get("order");
+
   const [articles, setArticles] = useState([]);
-  const [sortedAndFilteredArticles, setSortedAndFilteredArticles] = useState(
-    []
-  );
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    getArticles()
+    getArticles({ sortBy: sortByQuery, orderBy: orderQuery })
       .then(({ data }) => {
         setArticles(data.articles);
         setIsLoading(false);
@@ -27,55 +25,7 @@ export const ArticleList = ({
       .catch((err) => {
         setError(err);
       });
-  }, []);
-
-  // useEffect(() => {
-  //   if (articles) {
-  //     console.log(articles);
-  //     let filtered = articles;
-
-  //     if (topicFilter) {
-  //       filtered = filtered.filter((article) => article.topic === topicFilter);
-  //     }
-
-  //     if (dateSortDirection === "asc") {
-  //       filtered = filtered.sort(
-  //         (a, b) => new Date(a.created_at) - new Date(b.created_at)
-  //       );
-  //     }
-
-  //     if (dateSortDirection === "desc") {
-  //       filtered = filtered.sort(
-  //         (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  //       );
-  //     }
-  //     if (
-  //       // if votes
-  //       votesSortDirection === "asc"
-  //     ) {
-  //       filtered = filtered.sort((a, b) => a.votes - b.votes);
-  //     }
-
-  //     if (votesSortDirection === "desc") {
-  //       filtered = filtered.sort((a, b) => b.votes - a.votes);
-  //     }
-  //     // if comment count
-  //     if (commentCountSortDirection === "asc") {
-  //       filtered = filtered.sort((a, b) => a.comment_count - b.comment_count);
-  //     }
-
-  //     if (commentCountSortDirection === "desc") {
-  //       filtered = filtered.sort((a, b) => b.comment_count - a.comment_count);
-  //     }
-  //     setSortedAndFilteredArticles(filtered);
-  //   }
-  // }, [
-  //   articles,
-  //   topicFilter,
-  //   dateSortDirection,
-  //   commentCountSortDirection,
-  //   votesSortDirection,
-  // ]);
+  }, [sortByQuery, orderQuery]);
 
   if (isLoading) return <p>...is Loading</p>;
   if (error) return <p>{error}</p>;
@@ -86,12 +36,24 @@ export const ArticleList = ({
       spacing={{ xs: 2, md: 3 }}
       columns={{ xs: 4, sm: 8, md: 12 }}
     >
+      {/*  can this be refactored into one return somehow? */}
       {articles &&
+        !topicQuery &&
         articles.map((article) => (
           <Grid item xs={4} sm={4} md={4} key={article.article_id}>
             <ArticleCard article={article} />
           </Grid>
         ))}
+
+      {articles &&
+        topicQuery &&
+        articles
+          .filter((article) => article.topic === topicQuery)
+          .map((article) => (
+            <Grid item xs={4} sm={4} md={4} key={article.article_id}>
+              <ArticleCard article={article} />
+            </Grid>
+          ))}
     </Grid>
   );
 };

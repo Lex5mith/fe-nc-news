@@ -7,10 +7,8 @@ export const UserList = () => {
   const [availableUsers, setAvailableUsers] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
- 
 
   useEffect(() => {
-    console.log("use effect running");
     setIsLoading(true);
     getUsers()
       .then(({ data }) => {
@@ -24,6 +22,8 @@ export const UserList = () => {
   }, []);
 
   if (availableUsers) {
-    return availableUsers.map((user) => <UserCard user={user} key={user.username} />);
+    return availableUsers.map((user) => (
+      <UserCard user={user} key={user.username} />
+    ));
   }
 };

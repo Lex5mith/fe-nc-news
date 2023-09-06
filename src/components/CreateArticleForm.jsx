@@ -36,14 +36,6 @@ export const CreateArticleForm = () => {
     setArticleTopic(event.target.value);
   };
 
-  console.log({
-    user: user.username,
-    articleTitle,
-    articleContent,
-    articleImageURL,
-    articleTopic,
-  });
-
   const handleArticleSubmit = () => {
     if (
       user.username &&
