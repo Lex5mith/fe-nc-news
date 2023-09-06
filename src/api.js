@@ -29,3 +29,18 @@ export const getComments = (article_id) => {
     `https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`
   );
 };
+
+export const postArticle = ({author, title, body, topic, article_img_url}) => {
+    return axios.post(
+      `https://lexs-nc-news.onrender.com/api/articles`,
+      {
+        author: author,
+        title: title,
+        body: body,
+        topic: topic,
+        article_img_url: article_img_url,
+
+      }
+    );
+  };
+  
