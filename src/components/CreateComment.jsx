@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import CommentIcon from "@mui/icons-material/Comment";
 import Button from "@mui/material/Button";
@@ -66,8 +66,9 @@ export const CreateComment = ({ setArticleComments }) => {
             onClick={() => setShowCommentInput(!showCommentInput)}
           >
             Add Comment
-          </Button>
+          </Button> 
         )}
+        
         {showCommentInput && user.username && (
           <>
             <TextField
@@ -94,7 +95,10 @@ export const CreateComment = ({ setArticleComments }) => {
             sx={{ color: "tomato", alignSelf: "center" }}
             variant="h5"
           >
-            Please login to post a comment
+            Please <Link
+                  to="/login"
+                  style={{ textDecoration: "none" }}
+                >login</Link> to post a comment
           </Typography>
         )}
       </Stack>

@@ -168,6 +168,13 @@ export const SingleArticle = () => {
             >
               # {topic}
             </Typography>
+            <Typography
+              variant="h5"
+              color="text.primary"
+              sx={{ fontWeight: "medium", lineHeight: 2, textAlign: "right" }}
+            >
+              Votes: {votes}
+            </Typography>
           </Box>
 
           <Divider
