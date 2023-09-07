@@ -34,6 +34,7 @@ export const postComment = (article_id, username, articleText) => {
 export const getComments = (article_id) => {
   return axios.get(`${baseURL}/articles/${article_id}/comments`);
 };
+//.then ((res)=>{ return res.data.comment})
 
 export const postArticle = ({
   author,
@@ -59,6 +60,6 @@ export const getTopics = () => {
   return axios.get(`${baseURL}/topics`);
 };
 
-export const deleteComment = ({comment_id})=>{
+export const deleteComment = ({ comment_id })=>{
   return axios.delete(`${baseURL}/comments/${comment_id}`)
 }
