@@ -58,3 +58,7 @@ export const patchVotes = ({ article_id, inc_votes }) => {
 export const getTopics = () => {
   return axios.get(`${baseURL}/topics`);
 };
+
+export const deleteComment = ({comment_id})=>{
+  return axios.delete(`${baseURL}/comments/${comment_id}`)
+}
