@@ -1,7 +1,16 @@
 import axios from "axios";
 
-export const getArticles = () => {
-  return axios.get("https://lexs-nc-news.onrender.com/api/articles");
+export const getArticles = ({ sortBy, orderBy }) => {
+  console.log({ sortBy, orderBy });
+  let query = "";
+  if (sortBy) {
+    query = query.concat(`sort_by=${sortBy}&`);
+  }
+  if (orderBy) {
+    query = query.concat(`order=${orderBy}&`);
+  }
+
+  return axios.get(`https://lexs-nc-news.onrender.com/api/articles?${query}`);
 };
 
 export const getSingleArticle = (article_id) => {

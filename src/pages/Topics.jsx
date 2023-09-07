@@ -12,7 +12,6 @@ export const Topics = () => {
     setIsLoading(true);
     getTopics()
       .then(({ data }) => {
-        console.log(data);
         setTopics(data.topics);
         setIsLoading(false);
         setError(false);

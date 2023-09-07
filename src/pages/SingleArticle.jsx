@@ -31,7 +31,6 @@ export const SingleArticle = () => {
     setIsLoading(true);
     getSingleArticle(article_id_from_params)
       .then(({ data }) => {
-        console.log(data, "<<<data in single article");
         setSingleArticle(data.article);
         setIsLoading(false);
         setIsError(false);
@@ -65,7 +64,6 @@ export const SingleArticle = () => {
         setArticleComments(comments);
         setIsLoading(false);
         setIsError(false);
-        console.log(comments, "<<<< comments!!!!!!");
       });
     }
   }, [singleArticle]);
@@ -169,6 +167,13 @@ export const SingleArticle = () => {
               sx={{ fontWeight: "medium", lineHeight: 2, textAlign: "right" }}
             >
               # {topic}
+            </Typography>
+            <Typography
+              variant="h5"
+              color="text.primary"
+              sx={{ fontWeight: "medium", lineHeight: 2, textAlign: "right" }}
+            >
+              Votes: {votes}
             </Typography>
           </Box>
 

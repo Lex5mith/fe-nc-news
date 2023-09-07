@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -35,14 +35,6 @@ export const CreateArticleForm = () => {
   const handleArticleTopicChange = (event) => {
     setArticleTopic(event.target.value);
   };
-
-  console.log({
-    user: user.username,
-    articleTitle,
-    articleContent,
-    articleImageURL,
-    articleTopic,
-  });
 
   const handleArticleSubmit = () => {
     if (
@@ -90,7 +82,10 @@ export const CreateArticleForm = () => {
     >
       {!user.username ? (
         <Typography sx={{ color: "tomato", alignSelf: "center" }} variant="h5">
-          Please login to create an article
+          Please <Link
+                  to="/login"
+                  style={{ textDecoration: "none" }}
+                >login</Link> to create an article
         </Typography>
       ) : (
         <Box
@@ -121,6 +116,7 @@ export const CreateArticleForm = () => {
             onChange={handleArticleTitleChange}
           />
           <TextField
+          error={!articleContent}
             fullWidth
             multiline
             rows={4}
@@ -134,6 +130,7 @@ export const CreateArticleForm = () => {
             onChange={handleArticleContentChange}
           />
           <TextField
+          error={!articleTopic}
             fullWidth
             label="Image URL"
             id="article_img_url"

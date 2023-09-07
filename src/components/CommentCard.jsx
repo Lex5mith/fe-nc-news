@@ -26,7 +26,7 @@ export const CommentCard = ({ comment }) => {
         <IconButton aria-label="add to favorites">
           <CommentIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label="vote">
           <ThumbsUpDownIcon />
         </IconButton>
       </CardActions>
