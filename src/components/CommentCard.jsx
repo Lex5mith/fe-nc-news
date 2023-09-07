@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect } from "react";
+import { useState } from "react";
+import moment from "moment";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -7,36 +8,8 @@ import Typography from "@mui/material/Typography";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import CommentIcon from "@mui/icons-material/Comment";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import moment from "moment";
 
-import { UserContext } from "../contexts/User";
-import { deleteComment } from "../api";
-
-export const CommentCard = ({ comment, setCommentDeleted }) => {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const { user } = useContext(UserContext);
-
-  console.log(comment, "<<<<<");
-
-  const handleDeleteCommentClick = () => {
-    if (user.username === comment.author) setIsDeleting(true);
-  };
-
-  useEffect(() => {
-    if (isDeleting) {
-      (async () => {
-        try {
-          await deleteComment({ comment_id: comment.comment_id });
-          setIsDeleting(false);
-          setCommentDeleted(true);
-        } catch (err) {
-          console.log(err);
-          setIsDeleting(false);
-        }
-      })();
-    }
-  }, [isDeleting, comment.comment_id, setCommentDeleted]);
-
+export const CommentCard = ({ comment, handleDeleteCommentClick }) => {
   return (
     <Card sx={{ minHeight: "5em", padding: "1em", marginBottom: "1em" }}>
       <CardContent>
@@ -57,7 +30,12 @@ export const CommentCard = ({ comment, setCommentDeleted }) => {
         <IconButton aria-label="vote">
           <ThumbsUpDownIcon />
         </IconButton>
-        <IconButton aria-label="delete" onClick={handleDeleteCommentClick}>
+        <IconButton
+          aria-label="delete"
+          onClick={() =>
+            handleDeleteCommentClick(comment.author, comment.comment_id)
+          }
+        >
           <DeleteSweepIcon />
         </IconButton>
       </CardActions>
