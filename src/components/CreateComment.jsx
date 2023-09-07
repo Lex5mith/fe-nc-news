@@ -11,7 +11,6 @@ import { Typography } from "@mui/material";
 export const CreateComment = ({ setArticleComments }) => {
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState("");
-  
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { article_id: article_id_from_params } = useParams();
