@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const baseURL = `https://lexs-nc-news.onrender.com/api`;
+// const local = `http://localhost:9090/api`;
+
 export const getArticles = ({ sortBy, orderBy }) => {
   console.log({ sortBy, orderBy });
   let query = "";
@@ -10,33 +13,26 @@ export const getArticles = ({ sortBy, orderBy }) => {
     query = query.concat(`order=${orderBy}&`);
   }
 
-  return axios.get(`https://lexs-nc-news.onrender.com/api/articles?${query}`);
+  return axios.get(`${baseURL}/articles?${query}`);
 };
 
 export const getSingleArticle = (article_id) => {
-  return axios.get(
-    `https://lexs-nc-news.onrender.com/api/articles/${article_id}`
-  );
+  return axios.get(`${baseURL}/articles/${article_id}`);
 };
 
 export const getUsers = () => {
-  return axios.get(`https://lexs-nc-news.onrender.com/api/users`);
+  return axios.get(`${baseURL}/users`);
 };
 
 export const postComment = (article_id, username, articleText) => {
-  return axios.post(
-    `https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`,
-    {
-      username: username,
-      body: articleText,
-    }
-  );
+  return axios.post(`${baseURL}/articles/${article_id}/comments`, {
+    username: username,
+    body: articleText,
+  });
 };
 
 export const getComments = (article_id) => {
-  return axios.get(
-    `https://lexs-nc-news.onrender.com/api/articles/${article_id}/comments`
-  );
+  return axios.get(`${baseURL}/articles/${article_id}/comments`);
 };
 
 export const postArticle = ({
@@ -46,7 +42,7 @@ export const postArticle = ({
   topic,
   article_img_url,
 }) => {
-  return axios.post(`https://lexs-nc-news.onrender.com/api/articles`, {
+  return axios.post(`${baseURL}/articles`, {
     author: author,
     title: title,
     body: body,
@@ -55,6 +51,10 @@ export const postArticle = ({
   });
 };
 
+export const patchVotes = ({ article_id, inc_votes }) => {
+  return axios.patch(`${baseURL}/articles/${article_id}`, { inc_votes });
+};
+
 export const getTopics = () => {
-  return axios.get("https://lexs-nc-news.onrender.com/api/topics");
+  return axios.get(`${baseURL}/topics`);
 };
