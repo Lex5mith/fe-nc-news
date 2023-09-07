@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getArticles = ({ sortBy, orderBy }) => {
+export const getArticles = ({ sortBy, orderBy, topic }) => {
   console.log({ sortBy, orderBy });
   let query = "";
   if (sortBy) {
@@ -8,6 +8,9 @@ export const getArticles = ({ sortBy, orderBy }) => {
   }
   if (orderBy) {
     query = query.concat(`order=${orderBy}&`);
+  }
+  if (topic) {
+    query = query.concat(`topic=${topic}&`);
   }
 
   return axios.get(`https://lexs-nc-news.onrender.com/api/articles?${query}`);
