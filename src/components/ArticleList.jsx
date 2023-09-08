@@ -16,7 +16,7 @@ export const ArticleList = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getArticles({ sortBy: sortByQuery, orderBy: orderQuery })
+    getArticles({ sortBy: sortByQuery, orderBy: orderQuery, topic: topicQuery })
       .then(({ data }) => {
         setArticles(data.articles);
         setIsLoading(false);
@@ -36,24 +36,12 @@ export const ArticleList = () => {
       spacing={{ xs: 2, md: 3 }}
       columns={{ xs: 4, sm: 8, md: 12 }}
     >
-      {/*  can this be refactored into one return somehow? */}
       {articles &&
-        !topicQuery &&
         articles.map((article) => (
           <Grid item xs={4} sm={4} md={4} key={article.article_id}>
             <ArticleCard article={article} />
           </Grid>
         ))}
-
-      {articles &&
-        topicQuery &&
-        articles
-          .filter((article) => article.topic === topicQuery)
-          .map((article) => (
-            <Grid item xs={4} sm={4} md={4} key={article.article_id}>
-              <ArticleCard article={article} />
-            </Grid>
-          ))}
     </Grid>
   );
 };
