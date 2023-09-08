@@ -30,12 +30,6 @@ export const ArticleCard = ({ article }) => {
           <Typography variant="subtitle2" color="text.secondary">
             by {article.author}
           </Typography>
-          <IconButton aria-label="vote">
-          <ThumbsUpDownIcon />
-        </IconButton>
-        <Typography variant="subtitle2" color="text.secondary">
-            by {article.votes}
-          </Typography>
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">

@@ -18,6 +18,9 @@ import CommentIcon from "@mui/icons-material/Comment";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { CreateComment } from "../components/CreateComment";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import { patchVotes } from "../api";
 
 export const SingleArticle = () => {
   const [singleArticle, setSingleArticle] = useState({});
@@ -79,6 +82,17 @@ export const SingleArticle = () => {
     topic,
     votes,
   } = singleArticle;
+
+  console.log("singleArticle:: ", singleArticle);
+
+  const updateVotes = (votes) => {
+    setSingleArticle((previous) => {
+      return {
+        ...previous,
+        votes: (previous.votes += votes),
+      };
+    });
+  };
 
   if (isLoading) return <p>...is Loading</p>;
   if (isError) return <p>{isError}</p>;
@@ -175,6 +189,32 @@ export const SingleArticle = () => {
             >
               Votes: {votes}
             </Typography>
+            <Button
+              onClick={() => {
+                patchVotes({
+                  article_id: singleArticle.article_id,
+                  inc_votes: 1,
+                });
+                updateVotes(1);
+              }}
+            >
+              <ThumbUpIcon />
+            </Button>
+            <Button
+              onClick={() => {
+                patchVotes({
+                  article_id: singleArticle.article_id,
+                  inc_votes: -1,
+                });
+                updateVotes(-1);
+              }}
+            >
+              <ThumbDownIcon />
+            </Button>
+            {/* <TextField
+            label="Votes"
+            value={votes}
+            onChange={(event)=> setVotes(event.target.value)}/> */}
           </Box>
 
           <Divider

@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import CommentIcon from "@mui/icons-material/Comment";
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import moment from "moment";
 
 export const CommentCard = ({ comment }) => {
@@ -28,6 +29,9 @@ export const CommentCard = ({ comment }) => {
         </IconButton>
         <IconButton aria-label="vote">
           <ThumbsUpDownIcon />
+        </IconButton>
+        <IconButton aria-label="vote">
+          <DeleteSweepIcon />
         </IconButton>
       </CardActions>
     </Card>
