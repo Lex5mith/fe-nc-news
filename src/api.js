@@ -1,16 +1,18 @@
 import axios from "axios";
 
 const baseURL = `https://lexs-nc-news.onrender.com/api`;
-// const local = `http://localhost:9090/api`;
+// const baseURL = `http://localhost:9090/api`;
 
-export const getArticles = ({ sortBy, orderBy }) => {
-  console.log({ sortBy, orderBy });
+export const getArticles = ({ sortBy, orderBy, topic }) => {
   let query = "";
   if (sortBy) {
     query = query.concat(`sort_by=${sortBy}&`);
   }
   if (orderBy) {
     query = query.concat(`order=${orderBy}&`);
+  }
+  if (topic) {
+    query = query.concat(`topic=${topic}&`);
   }
 
   return axios.get(`${baseURL}/articles?${query}`);
@@ -60,6 +62,6 @@ export const getTopics = () => {
   return axios.get(`${baseURL}/topics`);
 };
 
-export const deleteComment = ({ comment_id })=>{
-  return axios.delete(`${baseURL}/comments/${comment_id}`)
-}
+export const deleteComment = ({ comment_id }) => {
+  return axios.delete(`${baseURL}/comments/${comment_id}`);
+};
