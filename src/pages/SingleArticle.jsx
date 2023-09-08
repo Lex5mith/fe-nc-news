@@ -1,26 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import { getArticles, getSingleArticle, getComments } from "../api";
-import { ArticleCard } from "../components/ArticleCard";
-import { Typography } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import { getUsers } from "../api";
-import { CommentCard } from "../components/CommentCard";
-import CommentIcon from "@mui/icons-material/Comment";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import { getUsers, getSingleArticle, getComments, patchVotes } from "../api";
 import { CreateComment } from "../components/CreateComment";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import { patchVotes } from "../api";
+import { CommentList } from "../components/CommentList";
+import { Article } from "../components/Article";
 
 export const SingleArticle = () => {
   const [singleArticle, setSingleArticle] = useState({});
@@ -83,14 +69,22 @@ export const SingleArticle = () => {
     votes,
   } = singleArticle;
 
-  console.log("singleArticle:: ", singleArticle);
+  // console.log("singleArticle:: ", singleArticle);
 
   const updateVotes = (votes) => {
-    setSingleArticle((previous) => {
+    // let currVotes = votes;
+    // console.log(singleArticle.votes)
+    // currVotes += 1;
+
+    setSingleArticle((prevArticle) => {
       return {
-        ...previous,
-        votes: (previous.votes += votes),
+        ...prevArticle,
+        votes: prevArticle.votes + votes,
       };
+    });
+    patchVotes({
+      article_id: singleArticle.article_id,
+      vote: votes,
     });
   };
 
@@ -110,8 +104,6 @@ export const SingleArticle = () => {
         },
       }}
     >
-      {/* <Paper elevation={0} />
-      <Paper /> */}
       <div
         style={{
           display: "flex",
@@ -124,122 +116,18 @@ export const SingleArticle = () => {
         }}
       >
         <Paper elevation={3} sx={{ padding: "2em" }}>
-          <CardMedia
-            sx={{ objectFit: "contain" }}
-            component="img"
-            height="400"
-            image={article_img_url}
-            alt={title}
+          <Article
+            article_id={article_id}
+            article_img_url={article_img_url}
+            created_at={created_at}
+            topic={topic}
+            votes={votes}
+            title={title}
+            author={author}
+            authorOfArticle={authorOfArticle}
+            body={body}
+            updateVotes={updateVotes}
           />
-          <Typography
-            variant="h5"
-            color="text.primary"
-            sx={{ fontWeight: "medium", lineHeight: 2 }}
-          >
-            Posted: {new Date(created_at).toLocaleDateString()}
-          </Typography>
-          <Typography
-            variant="h5"
-            color="text.primary"
-            sx={{ fontWeight: "medium", lineHeight: 2 }}
-          >
-            {title}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              variant="h5"
-              color="text.primary"
-              sx={{
-                fontWeight: "medium",
-                lineHeight: 2,
-                display: "flex",
-                flexDirection: "row",
-                alignContent: "baseline",
-              }}
-            >
-              <Avatar
-                sx={{
-                  lineHeight: 3,
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "baseline",
-                }}
-                alt={author}
-                src={authorOfArticle?.avatar_url}
-              />{" "}
-              by {author}
-            </Typography>
-            <Typography
-              variant="h5"
-              color="text.primary"
-              sx={{ fontWeight: "medium", lineHeight: 2, textAlign: "right" }}
-            >
-              # {topic}
-            </Typography>
-            <Typography
-              variant="h5"
-              color="text.primary"
-              sx={{ fontWeight: "medium", lineHeight: 2, textAlign: "right" }}
-            >
-              Votes: {votes}
-            </Typography>
-            <Button
-              onClick={() => {
-                patchVotes({
-                  article_id: singleArticle.article_id,
-                  inc_votes: 1,
-                });
-                updateVotes(1);
-              }}
-            >
-              <ThumbUpIcon />
-            </Button>
-            <Button
-              onClick={() => {
-                patchVotes({
-                  article_id: singleArticle.article_id,
-                  inc_votes: -1,
-                });
-                updateVotes(-1);
-              }}
-            >
-              <ThumbDownIcon />
-            </Button>
-            {/* <TextField
-            label="Votes"
-            value={votes}
-            onChange={(event)=> setVotes(event.target.value)}/> */}
-          </Box>
-
-          <Divider
-            sx={{
-              bgcolor: "secondary.dark",
-              lineHeight: 3,
-              display: "flex",
-              flexDirection: "row",
-              alignContent: "baseline",
-            }}
-            variant="middle"
-          />
-          <Typography
-            variant="body1"
-            color="text.primary"
-            sx={{
-              marginTop: "2em",
-              marginBottom: "2em",
-              fontWeight: "normal",
-              lineHeight: 2,
-              textAlign: "justify",
-            }}
-          >
-            {body}
-          </Typography>
 
           <CreateComment
             articleComments={articleComments}
@@ -256,33 +144,11 @@ export const SingleArticle = () => {
             }}
             variant="middle"
           />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              textAlign: "center",
-              justifyContent: "center",
-              fontSize: "4rem",
-              lineHeight: 3,
-              paddingTop: "1em",
-              paddingBottom: "0.5em",
-            }}
-          >
-            <CommentIcon
-              sx={{
-                fontSize: "4rem",
-                lineHeight: 3,
-              }}
-            />
-            <Typography variant="h6" color="text.secondary">
-              {articleComments.length} Comments
-            </Typography>
-          </Box>
-          {/* //map over and for each comment on article, assign comment card.// */}
-          {articleComments &&
-            articleComments.map((comment) => (
-              <CommentCard key={comment.comment_id} comment={comment} />
-            ))}
+
+          <CommentList
+            articleComments={articleComments}
+            setArticleComments={setArticleComments}
+          />
         </Paper>
       </div>
     </Box>

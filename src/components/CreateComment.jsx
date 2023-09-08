@@ -8,9 +8,10 @@ import { postComment } from "../api";
 import { UserContext } from "../contexts/User";
 import { Typography } from "@mui/material";
 
-export const CreateComment = ({ setArticleComments }) => {
+export const CreateComment = ({ setArticleComments, article_id }) => {
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [commentDeleted, setCommentDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { article_id: article_id_from_params } = useParams();
@@ -21,13 +22,14 @@ export const CreateComment = ({ setArticleComments }) => {
   };
 
   const handleSubmitComment = () => {
+   
     if (article_id_from_params && user.username && commentText) {
       // optimistc rendering stuff
       // put comment into state, so that UI updates automatically
       setArticleComments((prevComments) => {
         return [
           {
-            comment_id: 99999,
+            comment_id: 999999,
             body: commentText,
             article_id: article_id_from_params,
             author: user.username,
@@ -66,9 +68,9 @@ export const CreateComment = ({ setArticleComments }) => {
             onClick={() => setShowCommentInput(!showCommentInput)}
           >
             Add Comment
-          </Button> 
+          </Button>
         )}
-        
+
         {showCommentInput && user.username && (
           <>
             <TextField
@@ -88,7 +90,6 @@ export const CreateComment = ({ setArticleComments }) => {
             >
               Share your Thoughts
             </Button>
-            
           </>
         )}
         {showCommentInput && !user.username && (
@@ -96,10 +97,11 @@ export const CreateComment = ({ setArticleComments }) => {
             sx={{ color: "tomato", alignSelf: "center" }}
             variant="h5"
           >
-            Please <Link
-                  to="/login"
-                  style={{ textDecoration: "none" }}
-                >login</Link> to post a comment
+            Please{" "}
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              login
+            </Link>{" "}
+            to post a comment
           </Typography>
         )}
       </Stack>

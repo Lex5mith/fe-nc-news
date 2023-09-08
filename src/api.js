@@ -53,8 +53,8 @@ export const postArticle = ({
   });
 };
 
-export const patchVotes = ({ article_id, inc_votes }) => {
-  return axios.patch(`${baseURL}/articles/${article_id}`, { inc_votes });
+export const patchVotes = ({ article_id, vote }) => {
+  return axios.patch(`${baseURL}/articles/${article_id}`, { inc_votes: vote });
 };
 
 export const getTopics = () => {
