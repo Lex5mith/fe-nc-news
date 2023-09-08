@@ -29,7 +29,7 @@ export const CreateComment = ({ setArticleComments, article_id }) => {
       setArticleComments((prevComments) => {
         return [
           {
-            comment_id: Date.now(),
+            comment_id: 999999,
             body: commentText,
             article_id: article_id_from_params,
             author: user.username,

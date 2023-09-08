@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
-import { getUsers, getSingleArticle, getComments } from "../api";
+import { getUsers, getSingleArticle, getComments, patchVotes } from "../api";
 import { CreateComment } from "../components/CreateComment";
 import { CommentList } from "../components/CommentList";
 import { Article } from "../components/Article";
@@ -72,11 +72,19 @@ export const SingleArticle = () => {
   // console.log("singleArticle:: ", singleArticle);
 
   const updateVotes = (votes) => {
-    setSingleArticle((previous) => {
+    // let currVotes = votes;
+    // console.log(singleArticle.votes)
+    // currVotes += 1;
+
+    setSingleArticle((prevArticle) => {
       return {
-        ...previous,
-        votes: (previous.votes += votes),
+        ...prevArticle,
+        votes: prevArticle.votes + votes,
       };
+    });
+    patchVotes({
+      article_id: singleArticle.article_id,
+      vote: votes,
     });
   };
 

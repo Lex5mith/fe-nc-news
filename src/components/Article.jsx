@@ -88,24 +88,12 @@ export const Article = ({
           Votes: {votes}
         </Typography>
         <Button
-          onClick={() => {
-            patchVotes({
-              article_id: article_id,
-              inc_votes: 1,
-            });
-            updateVotes(1);
-          }}
+          onClick={() => updateVotes(1)}
         >
           <ThumbUpIcon />
         </Button>
         <Button
-          onClick={() => {
-            patchVotes({
-              article_id: article_id,
-              inc_votes: -1,
-            });
-            updateVotes(-1);
-          }}
+          onClick={() => updateVotes(-1)}
         >
           <ThumbDownIcon />
         </Button>

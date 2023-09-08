@@ -36,7 +36,6 @@ export const postComment = (article_id, username, articleText) => {
 export const getComments = (article_id) => {
   return axios.get(`${baseURL}/articles/${article_id}/comments`);
 };
-//.then ((res)=>{ return res.data.comment})
 
 export const postArticle = ({
   author,
@@ -54,8 +53,8 @@ export const postArticle = ({
   });
 };
 
-export const patchVotes = ({ article_id, inc_votes }) => {
-  return axios.patch(`${baseURL}/articles/${article_id}`, { inc_votes });
+export const patchVotes = ({ article_id, vote }) => {
+  return axios.patch(`${baseURL}/articles/${article_id}`, { inc_votes: vote });
 };
 
 export const getTopics = () => {
